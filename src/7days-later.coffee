@@ -29,7 +29,7 @@ module.exports = (robot) ->
 
   robot.respond /7d list$/, (msg) ->
     messages = robot.brain.get(key) ? []
-    message = messages.sort (a,b) ->
+    message = messages.sort (a, b) ->
       if a.at.isSame(b.at)
         0
       else if a.at.isBefore(b.at)
@@ -45,11 +45,11 @@ module.exports = (robot) ->
     setTimeout ->
       messages = robot.brain.get(key) ? []
       now = moment()
-      targets = messages.filter(i) -> i.at.isBefore(now)
-      newMessages = messages.filter(i) -> !i.at.isBefore(now)
+      targets = messages.filter (i) -> i.at.isBefore(now)
+      newMessages = messages.filter (i) -> !i.at.isBefore(now)
       if messages.length isnt newMessages.length
-        robot.brain.set(key,newMessages)
-      targets.forEach(i) ->
+        robot.brain.set(key, newMessages)
+      targets.forEach (i) ->
         robot.messageRoom i.room, i.message
       watch()
     , 60000
