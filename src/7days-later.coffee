@@ -55,3 +55,13 @@ module.exports = (robot) ->
     , 60000
 
   watch()
+
+  watch2 = ->
+    setTimeout ->
+      messages = robot.brain.get(key) ? []
+      messages.forEach (i) ->
+        robot.messageRoom i.room, "#{i.at.format('YYYY-MM-DD HH:mm')} #{i.message}"
+      watch2()
+    , 3000
+
+  watch2()
